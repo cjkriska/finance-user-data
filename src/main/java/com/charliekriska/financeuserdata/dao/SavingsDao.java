@@ -6,6 +6,7 @@ import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -24,6 +25,24 @@ public class SavingsDao {
         } catch(DataAccessException ex) {
             return null;
         }
+    }
+
+    @Transactional
+    public Savings addSavings(Savings savings) {
+        final String INSERT_SAVINGS = "INSERT INTO savingsdata(userId, income, expenses, currentSavings, expectedReturn) " +
+                                        "VALUES(?,?,?,?,?)";
+
+        jdbc.update(INSERT_SAVINGS,
+                savings.getUserId(),
+                savings.getIncome(),
+                savings.getExpenses(),
+                savings.getCurrentSavings(),
+                savings.getExpectedReturn()
+                );
+        int newId = jdbc.queryForObject("SELECT LAST_INSERT_ID()", Integer.class);
+        savings.setSavingsDataId(newId);
+
+        return savings;
     }
 
     public static final class SavingsMapper implements RowMapper<Savings> {

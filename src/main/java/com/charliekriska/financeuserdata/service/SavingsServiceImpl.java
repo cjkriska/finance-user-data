@@ -15,4 +15,9 @@ public class SavingsServiceImpl implements SavingsService {
     public Savings getSavingsByUserId(int userId) {
         return savingsDao.getSavingsByUserId(userId);
     }
+
+    @Override
+    public Savings addSavings(Savings savings) {
+        return savingsDao.addSavings(savings);
+    }
 }
