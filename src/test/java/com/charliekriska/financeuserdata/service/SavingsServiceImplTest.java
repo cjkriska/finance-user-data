@@ -1,42 +1,43 @@
-package com.charliekriska.financeuserdata.controller;
+package com.charliekriska.financeuserdata.service;
 
+import com.charliekriska.financeuserdata.dao.SavingsDao;
 import com.charliekriska.financeuserdata.model.Savings;
-import com.charliekriska.financeuserdata.service.SavingsService;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.Mockito.when;
-import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @ExtendWith(SpringExtension.class)
-public class SavingsControllerTest {
+public class SavingsServiceImplTest {
 
     @InjectMocks
-    private SavingsController savingsController;
+    private SavingsServiceImpl savingsService;
 
     @Mock
-    private SavingsService savingsService;
+    private SavingsDao savingsDao;
 
     @Test
-    void testGetSavingsByUserId() throws Exception {
+    void testGetSavingsByUserId() {
 
-        when(savingsService.getSavingsByUserId(anyInt())).thenReturn(savingsSample());
-        Savings result = savingsController.getSavingsByUserId(1);
+        when(savingsDao.getSavingsByUserId(anyInt())).thenReturn(savingsSample());
+        Savings result = savingsService.getSavingsByUserId(1);
         assertEquals(result.getUserId(), 1);
         assertEquals(result.getSavingsDataId(), 2);
         assertEquals(result.getIncome(), 50000);
 
     }
-    @Test
-    void testAddSavings() throws Exception {
 
-        when(savingsService.addSavings(any())).thenReturn(savingsSample());
-        Savings result = savingsController.addSavings(savingsSample());
+    @Test
+    void testAddSavings() {
+
+        when(savingsDao.addSavings(any())).thenReturn(savingsSample());
+        Savings result = savingsService.addSavings(savingsSample());
         assertEquals(result.getUserId(), 1);
         assertEquals(result.getSavingsDataId(), 2);
         assertEquals(result.getIncome(), 50000);
@@ -53,6 +54,5 @@ public class SavingsControllerTest {
                 .expectedReturn(7)
                 .build();
     }
-
 
 }
