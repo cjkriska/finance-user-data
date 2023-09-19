@@ -22,5 +22,14 @@ pipeline {
                 }
             }
         }
+
+        stage('Snyk') {
+            steps {
+                snykSecurity(
+                    snykInstallation: 'Snyk-Jenkins',
+                    snykTokenId: 'snyk-jenkins'
+                )
+            }
+        }
     }
 }
