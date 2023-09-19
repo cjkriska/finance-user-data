@@ -27,7 +27,8 @@ pipeline {
             steps {
                 snykSecurity(
                     snykInstallation: 'Snyk-Jenkins',
-                    snykTokenId: 'snyk-jenkins'
+                    snykTokenId: 'snyk-jenkins',
+                    severity: 'medium'
                 )
             }
         }
