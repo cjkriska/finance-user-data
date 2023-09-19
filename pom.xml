@@ -46,6 +46,14 @@
 			<version>1.18.28</version>
 			<scope>provided</scope>
 		</dependency>
+
+		<!-- Snyk Remediation Fixes (delete later as needed) -->
+		<dependency>
+			<groupId>org.apache.tomcat.embed</groupId>
+			<artifactId>tomcat-embed-core</artifactId>
+			<version>10.1.13</version>
+		</dependency>
+
 	</dependencies>
 
 	<build>
