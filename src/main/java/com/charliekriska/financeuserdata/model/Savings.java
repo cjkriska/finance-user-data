@@ -1,6 +1,5 @@
 package com.charliekriska.financeuserdata.model;
 
-import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 
