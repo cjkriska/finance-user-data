@@ -1,6 +1,7 @@
 package com.charliekriska.financeuserdata.dao;
 
 import com.charliekriska.financeuserdata.model.Savings;
+import com.charliekriska.financeuserdata.utility.Samples;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -24,7 +25,8 @@ public class SavingsDaoTest {
     @Test
     void testGetSavingsByUserId() {
 
-        when(jdbc.queryForObject(eq("SELECT * FROM savingsdata WHERE userId = ?;"), any(SavingsDao.SavingsMapper.class), anyInt())).thenReturn(savingsSampleOutput());
+        when(jdbc.queryForObject(eq("SELECT * FROM savingsdata WHERE userId = ?;"), any(SavingsDao.SavingsMapper.class), anyInt()))
+                .thenReturn(Samples.savingsSampleOutput());
         Savings result = savingsDao.getSavingsByUserId(1);
         assertEquals(result.getUserId(), 1);
         assertEquals(result.getSavingsDataId(), 2);
@@ -57,30 +59,9 @@ public class SavingsDaoTest {
         when(jdbc.queryForObject(any(String.class), any(Class.class)))
                 .thenReturn(2);
 
-        Savings result = savingsDao.addSavings(savingsSampleInput());
+        Savings result = savingsDao.addSavings(Samples.savingsSampleInput());
         assertEquals(result.getSavingsDataId(), 2);
 
-    }
-
-    public Savings savingsSampleInput() {
-        return Savings.builder()
-                .userId(1)
-                .income(50000)
-                .expenses(35000)
-                .currentSavings(5000)
-                .expectedReturn(7)
-                .build();
-    }
-
-    public Savings savingsSampleOutput() {
-        return Savings.builder()
-                .savingsDataId(2)
-                .userId(1)
-                .income(50000)
-                .expenses(35000)
-                .currentSavings(5000)
-                .expectedReturn(7)
-                .build();
     }
 
 }
